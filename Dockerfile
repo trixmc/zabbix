@@ -47,4 +47,4 @@ RUN chmod +x /root/etckeeper.sh
 RUN /root/etckeeper.sh
 
 #open ports
-EXPOSE 22
+EXPOSE 22 10050 80
