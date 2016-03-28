@@ -18,7 +18,8 @@ RUN apt-get install -y zabbix-server-mysql zabbix-frontend-php zabbix-agent apac
 COPY configs/php.ini /etc/php5/apache2/php.ini
 
 #Enable start server
-COPY configs/zabbix-server-init /etc/init.d/zabbix-server
+RUN mv /etc/default/zabbix-server
+COPY configs/zabbix-server-init /etc/default/zabbix-server
 
 #DB Connect info
 COPY configs/zabbix.conf.php /etc/zabbix/zabbix.conf.php
@@ -33,7 +34,7 @@ RUN sudo mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
 #change 'pass' to your secret password
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-# SSH login fix. Otherwise user is kicked off after login
+# SSHlogin fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
