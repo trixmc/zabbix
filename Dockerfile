@@ -9,10 +9,10 @@ RUN apt-get install -y vim nano mc screen curl unzip wget tmux zip
 #MySQL install + password
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
-RUN sudo apt-get  install -y mysql-server mysql-client
+RUN sudo apt-get  install -y mysql-server mysql-client 
 
 #Install Zabbix
-RUN apt-get install -y zabbix-server-mysql zabbix-frontend-php zabbix-agent
+RUN apt-get install -y zabbix-server-mysql zabbix-frontend-php zabbix-agent apache2
 
 #php.ini config
 COPY configs/php.ini /etc/php5/apache2/php.ini
