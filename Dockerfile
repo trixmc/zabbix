@@ -23,6 +23,8 @@ COPY configs/zabbix-server-init /etc/default/zabbix-server
 
 #DB Connect info
 COPY configs/zabbix.conf.php /etc/zabbix/zabbix.conf.php
+RUN rm /etc/zabbix/zabbix_server.conf
+COPY configs/zabbix-server.conf /etc/zabbix/zabbix_server.conf
 
 #Config Apache2
 RUN rm /etc/apache2/sites-available/000-default.conf
