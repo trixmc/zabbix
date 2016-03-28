@@ -12,12 +12,20 @@ RUN echo "mysql-server mysql-server/root_password_again password root" | debconf
 RUN sudo apt-get  install -y mysql-server mysql-client
 
 #Install Zabbix
-RUN apt-get install -y zabbix-server-mysql zabbix-frontend-php
+RUN apt-get install -y zabbix-server-mysql zabbix-frontend-php zabbix-agent
 
-#Create Database
-COPY configs/sql/images.sql /usr/share/zabbix-server-mysql/
-COPY configs/sql/schema.sql /usr/share/zabbix-server-mysql/
-COPY configs/sql/data.sql /usr/share/zabbix-server-mysql/
+#php.ini config
+COPY configs/php.ini /etc/php5/apache2/php.ini
+
+#Enable start server
+COPY configs/zabbix-server-init /etc/init.d/zabbix-server
+
+#DB Connect info
+COPY configs/zabbix.conf.php /etc/zabbix/zabbix.conf.php
+
+#Config Apache2
+RUN rm /etc/apache2/sites-available/000-default.conf
+COPY configs/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # SSH service
 RUN sudo apt-get install -y openssh-server openssh-client
