@@ -18,7 +18,7 @@ RUN apt-get install -y zabbix-server-mysql zabbix-frontend-php zabbix-agent apac
 COPY configs/php.ini /etc/php5/apache2/php.ini
 
 #Enable start server
-RUN mv /etc/default/zabbix-server
+RUN rm /etc/default/zabbix-server
 COPY configs/zabbix-server-init /etc/default/zabbix-server
 
 #DB Connect info
